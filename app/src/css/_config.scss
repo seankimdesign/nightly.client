@@ -1,0 +1,55 @@
+$color-bg: #161e1e;
+$color-white: #fafcfc;
+$color-yellow: #f6e14b;
+$color-bg-alt: #242826;
+$color-white-alt: #b4b4b4;
+$color-yellow-alt: #e3b11d;
+$color-gray: #545856;
+
+$font-sans: 'Ubuntu', sans-serif;
+$font-slab: 'Slabo 27px', serif;
+
+$header-height: 75px;
+$header-height-inverse: calc(100vh - #{$header-height});
+
+%text-bold-heading {
+  font-family: $font-sans;
+  color: $color-white;
+  font-size: 22px;
+}
+
+%text-section-title {
+  font-family: $font-slab;
+  color: $color-yellow;
+  font-size: 44px;
+}
+
+%text-primary {
+  font-family: $font-sans;
+  color: $color-white;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+%text-secondary {
+  @extend %text-primary;
+  color: $color-white-alt;
+  font-weight: 400;
+  font-style: italic;
+}
+
+%text-fine-print {
+  @extend %text-secondary;
+  font-size: 13px;
+  font-style: normal;
+}
+
+:export {
+  colorBg: #161e1e;
+  colorWhite: #fafcfc;
+  colorYellow: #f6e14b;
+  colorBgAlt: #242826;
+  colorWhiteAlt: #b4b4b4;
+  colorYellowAlt: #e3b11d;
+  colorGray: #545856;
+}

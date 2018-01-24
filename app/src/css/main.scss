@@ -1,9 +1,30 @@
-#main{
+@import "config";
 
-  padding: 15px 45px;
-  font-family: "Source Sans Pro", "Roboto", sans-serif;
+body{
+  margin: 0;
+}
 
-  .red {
-    color: #c43415;
+.header{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: $header-height;
+  background-color: $color-bg;
+  border-bottom: 1px solid $color-gray;
+}
+
+section{
+
+  height: $header-height-inverse;
+
+  &.landing{
+    margin-top: $header-height;
+    background-color: $color-bg;
+  }
+
+  &.features{
+    background-color: $color-bg-alt;
   }
 }
+
+

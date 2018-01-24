@@ -11,7 +11,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "svg.js": "^2.6.3"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
