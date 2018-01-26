@@ -7,15 +7,19 @@ export default {
       },
       guides: {
         desktop: {
-          row: 11,
+          rows: 11,
           reach: 85,
-          logoScale: 15,
-          logox: 10,
-          logoy: 10
+          logoScale: 13,
+          logoOverlapPadding: 25,
+          logoHorizontalPos: 13.5,
+          logoVerticalPos: 12
         }
       },
       verticalPadding: 50,
       horizontalScale: 1.3
+    },
+    logo: {
+      logoWidthScale: 3.42
     },
     symbols: {
       symbolSize: 7,
@@ -23,10 +27,10 @@ export default {
       colorVariance: 35
     },
     animation: {
-      animateVariance: 45,
-      animationDuration: 500,
-      animationScale: 175,
-      animationDelayMin: 300,
+      animateVariance: 90,
+      animationDuration: 600,
+      animationScale: 225,
+      animationDelayMin: 250,
       animationDelayMax: 2500
     },
     debounceTimer: 250
