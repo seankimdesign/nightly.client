@@ -13,8 +13,13 @@ export default {
     }
   },
   symbolSize: 7,
-  colorVariance: 35,
   verticalPadding: 50,
   horizontalScale: 1.3,
+  colorVariance: 35,
+  animateVariance: 45,
+  animationDuration: 600,
+  animationScale: 175,
+  animationDelayMin: 300,
+  animationDelayMax: 2500,
   debounceTimer: 250
 }

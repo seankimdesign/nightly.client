@@ -26,6 +26,10 @@ module.exports = {
           ],
           fallback: 'style-loader'
         })
+      },
+      {
+        test: /\.svg$/,
+        loader: 'svg-sprite-loader'
       }
     ]
   },
