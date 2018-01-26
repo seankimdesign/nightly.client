@@ -3,7 +3,8 @@ import SVG from 'svg.js'
 
 import styles from '../css/_config.scss'
 import CONF from './config'
-import symbols from '../svg/crescent.svg'
+
+import svgCrescent from '../svg/crescent.svg'
 
 const landingDom = document.getElementById('landing')
 const canvas = SVG(landingDom)
@@ -13,7 +14,8 @@ let renderedSymbols
 const prepDraw = () => {
   const canvasHeight = landingDom.clientHeight
   const canvasWidth = landingDom.clientWidth
-  const guide = CONF.guides.desktop
+  // TODO: Implement viewport ratio detection
+  const guide = CONF.bgRender.spacing.guides.desktop
   const schema = getCoords(guide.row, guide.reach, canvasHeight, canvasWidth)
 
   if (renderedSymbols) renderedSymbols.remove()
@@ -24,22 +26,24 @@ const prepDraw = () => {
 
 function getCoords (rows, reach, height, width) {
   const schema = []
-  const distanceY = Math.round((height - (CONF.verticalPadding * 2)) / rows)
-  const distanceX = Math.round(distanceY * CONF.horizontalScale)
+  const { spacing, symbols, animation } = CONF.bgRender
+  const distanceY = Math.round((height - (spacing.verticalPadding * 2)) / rows)
+  const distanceX = Math.round(distanceY * spacing.horizontalScale)
   const cols = Math.round((width * reach / 100) / distanceX)
+
   for (let i = 0; i <= rows; i++) {
-    const rowY = Math.round((CONF.verticalPadding) + (i * distanceY))
+    const rowY = Math.round((spacing.verticalPadding) + (i * distanceY))
     let pos = Math.min(Math.ceil(((i + 1) / rows) * 10), 10)
-    let maxCols = Math.floor(CONF.plotFn(pos) / 100 * cols)
-    let isEclipse = Boolean(i % 2)
+    let maxCols = Math.floor(spacing.plotFn(pos) / 100 * cols)
+    let isCrescent = Boolean(i % 2)
     for (let k = 0; k <= maxCols; k++) {
-      isEclipse = !isEclipse
+      isCrescent = !isCrescent
       schema.push({
         x: Math.round((distanceX / 2) + (k * distanceX)),
         y: rowY,
-        s: isEclipse,
-        c: (Math.random() * 100) < CONF.colorVariance,
-        a: (Math.random() * 100) < CONF.animateVariance
+        s: isCrescent,
+        c: (Math.random() * 100) < symbols.colorVariance,
+        a: (Math.random() * 100) < animation.animateVariance
       })
     }
   }
@@ -47,21 +51,39 @@ function getCoords (rows, reach, height, width) {
 }
 
 function doRender (schema, doAnimate) {
+  const { symbols, animation } = CONF.bgRender
+  const crescentNode = svgCrescent.node.firstElementChild
+  const crescentWidth = Math.round(symbols.symbolSize * symbols.crescentWidthScale / 100)
+  const symbolsTable = {
+    fullmoon: {
+      render: () => canvas.circle(symbols.symbolSize),
+      width: symbols.symbolSize,
+      height: symbols.symbolSize
+    },
+    crescent: {
+      render: () => SVG.adopt(crescentNode).clone().size(crescentWidth, symbols.symbolSize),
+      width: crescentWidth,
+      height: symbols.symbolSize
+    }
+  }
+
   let symbolGroup = canvas.group()
+
   schema.forEach(plot => {
     const color = plot.c ? styles.colorYellow : styles.colorWhite
-    const elem = plot.s
-      ? SVG.adopt(document.getElementById('crescent_crescent')).clone()
-      : canvas.circle(CONF.symbolSize)
-    elem.size(CONF.symbolSize, CONF.symbolSize).center(plot.x, plot.y).fill(color)
+    const elemType = plot.s ? symbolsTable.crescent : symbolsTable.fullmoon
+    const elem = elemType.render()
+    elem.center(plot.x, plot.y).fill(color)
     if (doAnimate && plot.a) {
-      const blownUp = CONF.symbolSize * (CONF.animationScale / 100)
-      const centerOffset = parseInt((blownUp - CONF.symbolSize) / 2)
-      const startAfter = parseInt(CONF.animationDelayMax * Math.random()) + CONF.animationDelayMin
-      elem.animate(CONF.animationDuration, '<', startAfter)
-        .size(blownUp, blownUp).dmove(-centerOffset, -centerOffset)
-        .animate(CONF.animationDuration, '>')
-        .size(CONF.symbolSize, CONF.symbolSize).center(plot.x, plot.y)
+      const zoomWidth = elemType.width * (animation.animationScale / 100)
+      const zoomHeight = elemType.height * (animation.animationScale / 100)
+      const centerOffsetX = Math.round((zoomWidth - elemType.width) / 2)
+      const centerOffsetY = Math.round((zoomHeight - elemType.height) / 2)
+      const startAfter = parseInt(animation.animationDelayMax * Math.random()) + animation.animationDelayMin
+      elem.animate(animation.animationDuration, '<', startAfter)
+        .size(zoomWidth, zoomHeight).dmove(-centerOffsetX, -centerOffsetY)
+        .animate(animation.animationDuration, '>')
+        .size(elemType.width, elemType.height).center(plot.x, plot.y)
     }
     symbolGroup.add(elem)
   })
@@ -69,4 +91,4 @@ function doRender (schema, doAnimate) {
 }
 
 prepDraw()
-window.addEventListener('resize', _.debounce(prepDraw, CONF.debounceTimer), false)
+window.addEventListener('resize', _.debounce(prepDraw, CONF.bgRender.debounceTimer), false)
