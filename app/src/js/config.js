@@ -8,11 +8,15 @@ export default {
       guides: {
         desktop: {
           rows: 11,
-          reach: 85,
-          logoScale: 13,
-          logoOverlapPadding: 25,
-          logoHorizontalPos: 13.5,
-          logoVerticalPos: 12
+          reach: 75,
+          logoScale: 12.5,
+          logoOverlapVerticalPadding: 12,
+          logoOverlapHorizontalPadding: 35,
+          logoHorizontalPos: 9,
+          logoVerticalPos: 11,
+          subtitleRow: 5,
+          subtitleRightMarginScale: 10,
+          subtitlePadding: 20
         }
       },
       verticalPadding: 50,

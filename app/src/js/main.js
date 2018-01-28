@@ -8,7 +8,9 @@ import svgCrescent from '../svg/crescent.svg'
 import svgLogo from '../svg/logo.svg'
 import util from './util'
 
-const landingDom = document.getElementById('landing')
+const subheadDom = document.getElementsByClassName('subhead')[0]
+const subheadInitialFontSize = parseInt(window.getComputedStyle(subheadDom)['fontSize'])
+const landingDom = document.getElementById('svg-canvas')
 const canvas = SVG(landingDom)
 let initialRender = true
 let renderedElems = []
@@ -25,17 +27,16 @@ const prepDraw = () => {
     logoSchema
   }
 
-  if (renderedElems.length) renderedElems.forEach(elem => elem.remove())
+  moveAndResizeSubhead(guide, symbolSchema, canvasWidth)
 
+  if (renderedElems.length) renderedElems.forEach(elem => elem.remove())
   renderedElems = doRender(schemas, initialRender)
-  console.log(renderedElems)
-  // renderedElems.forEach(elem => canvas.add(elem))
   initialRender = false
 }
 
 function getSymbolSchema (guide, height, width) {
   const symbolSchema = []
-  const { rows, reach } = guide
+  const { rows, reach, subtitleRow } = guide
   const { spacing, symbols, animation } = CONF.bgRender
   const distanceY = Math.round((height - (spacing.verticalPadding * 2)) / rows)
   const distanceX = Math.round(distanceY * spacing.horizontalScale)
@@ -53,7 +54,8 @@ function getSymbolSchema (guide, height, width) {
         y: rowY,
         s: isCrescent,
         c: (Math.random() * 100) < symbols.colorVariance,
-        a: (Math.random() * 100) < animation.animateVariance
+        a: (Math.random() * 100) < animation.animateVariance,
+        r: i + 1 === subtitleRow
       })
     }
   }
@@ -61,18 +63,40 @@ function getSymbolSchema (guide, height, width) {
 }
 
 function getLogoSchema (guide, widthScale, height, width) {
-  const { logoScale, logoOverlapPadding, logoHorizontalPos, logoVerticalPos } = guide
+  const { logoScale, logoOverlapVerticalPadding, logoOverlapHorizontalPadding, logoHorizontalPos, logoVerticalPos } = guide
   const initialHeight = Math.round(height * logoScale / 100)
   const initialWidth = Math.round(initialHeight * widthScale)
-  const paddedHeight = initialHeight + (logoOverlapPadding * 2)
-  const paddedWidth = initialWidth + (logoOverlapPadding * 2)
+  const paddedHeight = initialHeight + (logoOverlapVerticalPadding * 2)
+  const paddedWidth = initialWidth + (logoOverlapHorizontalPadding * 2)
   return {
     top: Math.round(logoVerticalPos * height / 100),
     left: Math.round(logoHorizontalPos * width / 100),
     boxHeight: paddedHeight,
     boxWidth: paddedWidth,
-    padding: logoOverlapPadding
+    verticalPadding: logoOverlapVerticalPadding,
+    horizontalPadding: logoOverlapHorizontalPadding
   }
+}
+
+function moveAndResizeSubhead (guide, symbolSchema, width) {
+  const { subtitleRightMarginScale, subtitlePadding } = guide
+  const rightMargin = Math.round(subtitleRightMarginScale * width / 100)
+  const verticalPosition = symbolSchema.find(s => s.r).y - 2
+
+  let currentFontSize = subheadInitialFontSize
+  subheadDom.style.fontSize = currentFontSize + 'px'
+
+  let occupied = (subheadDom.clientWidth + rightMargin * 2)
+
+  while (occupied > width) {
+    currentFontSize = (parseInt(subheadDom.style.fontSize) - 1)
+    subheadDom.style.fontSize = currentFontSize + 'px'
+    occupied = (subheadDom.clientWidth + rightMargin * 2)
+  }
+  subheadDom.style.right = subtitleRightMarginScale + '%'
+  subheadDom.style.paddingLeft = subtitlePadding + 'px'
+  subheadDom.style.marginTop = verticalPosition - Math.round(currentFontSize / 2) + 'px'
+  subheadDom.style.visibility = 'visible'
 }
 
 function doRender (schemas, doAnimate) {
@@ -81,13 +105,14 @@ function doRender (schemas, doAnimate) {
   const symbolGroup = renderSymbols(symbolSchema, logoSchema, doAnimate)
   const logoElem = renderLogo(logoSchema)
 
-  console.log(logoElem)
-
   return [symbolGroup, logoElem]
 }
 
 function renderSymbols (symbolSchema, logoSchema, doAnimate) {
   const { symbols, animation } = CONF.bgRender
+
+  const subheadLeft = subheadDom.offsetLeft
+
   const boxTop = logoSchema.top
   const boxBottom = boxTop + logoSchema.boxHeight
   const boxLeft = logoSchema.left
@@ -111,7 +136,9 @@ function renderSymbols (symbolSchema, logoSchema, doAnimate) {
   const symbolGroup = canvas.group()
 
   symbolSchema.map(plot => {
-    if (util.isBetween(plot.x, boxLeft, boxRight) && util.isBetween(plot.y, boxTop, boxBottom)) return
+    let noRender = util.isBetween(plot.x, boxLeft, boxRight) && util.isBetween(plot.y, boxTop, boxBottom)
+    noRender = noRender || (plot.r && plot.x > subheadLeft)
+    if (noRender) return
     const color = plot.c ? styles.colorYellow : styles.colorWhite
     const elemType = plot.s ? symbolsTable.crescent : symbolsTable.fullmoon
     const elem = elemType.render()
@@ -134,12 +161,13 @@ function renderSymbols (symbolSchema, logoSchema, doAnimate) {
 }
 
 function renderLogo (logoSchema) {
-  const { top, left, boxWidth, boxHeight, padding } = logoSchema
-  const elemWidth = boxWidth - (padding * 2)
-  const elemHeight = boxHeight - (padding * 2)
+  const { top, left, boxWidth, boxHeight, verticalPadding, horizontalPadding } = logoSchema
+  const elemWidth = boxWidth - (horizontalPadding * 2)
+  const elemHeight = boxHeight - (verticalPadding * 2)
 
   const logoRef = SVG.adopt(svgLogo.node).clone()
-  return canvas.use(logoRef).size(elemWidth, elemHeight).move(left + padding, top + padding).fill(styles.colorWhite)
+  return canvas.use(logoRef).size(elemWidth, elemHeight)
+    .move(left + horizontalPadding, top + verticalPadding).fill(styles.colorWhite)
 }
 
 prepDraw()

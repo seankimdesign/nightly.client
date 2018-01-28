@@ -20,6 +20,17 @@ section{
   &.landing{
     margin-top: $header-height;
     background-color: $color-bg;
+
+    >.svg-canvas{
+      height: 100%;
+    }
+
+    .subhead{
+      @extend %text-bold-heading;
+      position: absolute;
+      white-space: nowrap;
+      visibility: hidden;
+    }
   }
 
   &.features{
