@@ -18,10 +18,13 @@ let renderedElems = []
 const prepDraw = () => {
   const canvasHeight = landingDom.clientHeight
   const canvasWidth = landingDom.clientWidth
+  const { logo, symbols, animation } = CONF.bgRender
+
   // TODO: Implement viewport ratio detection
+  const isDesktop = true
   const guide = CONF.bgRender.spacing.guides.desktop
   const symbolSchema = getSymbolSchema(guide, canvasHeight, canvasWidth)
-  const logoSchema = getLogoSchema(guide, CONF.bgRender.logo.logoWidthScale, canvasHeight, canvasWidth)
+  const logoSchema = getLogoSchema(guide, logo.logoWidthScale, canvasHeight, canvasWidth)
   const schemas = {
     symbolSchema,
     logoSchema
@@ -29,8 +32,18 @@ const prepDraw = () => {
 
   moveAndResizeSubhead(guide, symbolSchema, canvasWidth)
 
-  if (renderedElems.length) renderedElems.forEach(elem => elem.remove())
+  for (let key in renderedElems) {
+    renderedElems[key].remove()
+  }
   renderedElems = doRender(schemas, initialRender)
+  canvas.off()
+  if (isDesktop) {
+    let listenerDelay = initialRender ? animation.animationDelayMax + (animation.animationDuration * 2) : 0
+    _.delay(() => {
+      canvas.on('mousemove', getMouseMoveEvent(guide.rows, canvasHeight, symbols, renderedElems.symbolGroup))
+    }, listenerDelay
+    )
+  }
   initialRender = false
 }
 
@@ -105,7 +118,7 @@ function doRender (schemas, doAnimate) {
   const symbolGroup = renderSymbols(symbolSchema, logoSchema, doAnimate)
   const logoElem = renderLogo(logoSchema)
 
-  return [symbolGroup, logoElem]
+  return {symbolGroup, logoElem}
 }
 
 function renderSymbols (symbolSchema, logoSchema, doAnimate) {
@@ -113,10 +126,10 @@ function renderSymbols (symbolSchema, logoSchema, doAnimate) {
 
   const subheadLeft = subheadDom.offsetLeft
 
-  const boxTop = logoSchema.top
-  const boxBottom = boxTop + logoSchema.boxHeight
-  const boxLeft = logoSchema.left
-  const boxRight = boxLeft + logoSchema.boxWidth
+  const logoBoxTop = logoSchema.top
+  const logoBoxBottom = logoBoxTop + logoSchema.boxHeight
+  const logoBoxLeft = logoSchema.left
+  const logoBoxRight = logoBoxLeft + logoSchema.boxWidth
 
   const crescentNode = svgCrescent.node.firstElementChild
   const crescentWidth = Math.round(symbols.symbolSize * symbols.crescentWidthScale / 100)
@@ -135,14 +148,14 @@ function renderSymbols (symbolSchema, logoSchema, doAnimate) {
 
   const symbolGroup = canvas.group()
 
-  symbolSchema.map(plot => {
-    let noRender = util.isBetween(plot.x, boxLeft, boxRight) && util.isBetween(plot.y, boxTop, boxBottom)
+  symbolSchema.map((plot, indx) => {
+    let noRender = util.isBetween(plot.x, logoBoxLeft, logoBoxRight) && util.isBetween(plot.y, logoBoxTop, logoBoxBottom)
     noRender = noRender || (plot.r && plot.x > subheadLeft)
     if (noRender) return
     const color = plot.c ? styles.colorYellow : styles.colorWhite
     const elemType = plot.s ? symbolsTable.crescent : symbolsTable.fullmoon
     const elem = elemType.render()
-    elem.center(plot.x, plot.y).fill(color)
+    elem.center(plot.x, plot.y).fill(color).data('indx', indx)
     if (doAnimate && plot.a) {
       const zoomWidth = elemType.width * (animation.animationScale / 100)
       const zoomHeight = elemType.height * (animation.animationScale / 100)
@@ -170,5 +183,45 @@ function renderLogo (logoSchema) {
     .move(left + horizontalPadding, top + verticalPadding).fill(styles.colorWhite)
 }
 
+function getMouseMoveEvent (rows, height, symbolConf, renderedSymbols) {
+  const { detectionRange, responseFactor, responseStrength, responseThreshold } = symbolConf
+  const responseRange = Math.round(height * detectionRange / rows)
+  const nodeList = renderedSymbols.children()
+  const easing = (x, factor) => Math.max(Math.pow((x * responseStrength) / factor, responseFactor / 100) - (x * responseThreshold), 0)
+  const detectionMap = nodeList.map(node => {
+    const x = node.cx()
+    const y = node.cy()
+    return {
+      left: x - responseRange,
+      right: x + responseRange,
+      top: y - responseRange,
+      bottom: y + responseRange,
+      x,
+      y,
+      node
+    }
+  })
+  return _.throttle((e) => {
+    const x = e.offsetX
+    const y = e.offsetY
+    detectionMap.forEach(symbol => {
+      const withinX = x > symbol.left && x < symbol.right
+      const withinY = y > symbol.top && y < symbol.bottom
+      if (withinX && withinY) {
+        let diffX = Math.abs(x - symbol.x)
+        let diffY = Math.abs(y - symbol.y)
+        let factor = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2)) / responseRange
+        diffX = easing(diffX, factor)
+        diffY = easing(diffY, factor)
+        let newX = x > symbol.x ? symbol.x - diffX : symbol.x + diffX
+        let newY = y > symbol.y ? symbol.y - diffY : symbol.y + diffY
+        symbol.node.center(newX, newY)
+      } else {
+        symbol.node.center(symbol.x, symbol.y)
+      }
+    })
+  }, CONF.bgRender.mouseMovementThrottleTimer)
+}
+
 prepDraw()
-window.addEventListener('resize', _.debounce(prepDraw, CONF.bgRender.debounceTimer), false)
+window.addEventListener('resize', _.debounce(prepDraw, CONF.bgRender.resizeRenderDebounceTimer), false)

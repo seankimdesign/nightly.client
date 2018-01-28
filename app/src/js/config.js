@@ -28,7 +28,11 @@ export default {
     symbols: {
       symbolSize: 7,
       crescentWidthScale: 72,
-      colorVariance: 35
+      colorVariance: 35,
+      detectionRange: 3.5,
+      responseFactor: 72,
+      responseStrength: 0.45,
+      responseThreshold: 0.25
     },
     animation: {
       animateVariance: 90,
@@ -37,6 +41,7 @@ export default {
       animationDelayMin: 250,
       animationDelayMax: 2500
     },
-    debounceTimer: 250
+    resizeRenderDebounceTimer: 250,
+    mouseMovementThrottleTimer: 33
   }
 }
