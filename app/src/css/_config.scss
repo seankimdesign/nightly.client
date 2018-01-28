@@ -3,8 +3,9 @@ $color-white: #fafcfc;
 $color-yellow: #f6e14b;
 $color-bg-alt: #242826;
 $color-white-alt: #b4b4b4;
-$color-yellow-alt: #e3b11d;
+$color-yellow-alt: #d7a216;
 $color-gray: #545856;
+$transparent: rgba(0,0,0,0);
 
 $font-sans: 'Ubuntu', sans-serif;
 $font-slab: 'Slabo 27px', serif;
@@ -12,10 +13,40 @@ $font-slab: 'Slabo 27px', serif;
 $header-height: 75px;
 $header-height-inverse: calc(100vh - #{$header-height});
 
+$side-margin: calc(6% + 15px);
+$side-margin-inward: calc(14% - 35px);
+
+@mixin pretty-link($hover-color){
+  text-decoration: none;
+  transition: color 0.2s ease-in;
+
+  &:hover{
+    color: $hover-color;
+  }
+}
+
+@mixin pretty-button($bg-color, $hover-bg-color, $hover-text-color){
+  transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out;
+  background-color: $bg-color;
+
+  &:hover{
+    color: $hover-text-color;
+    background-color: $hover-bg-color;
+  }
+}
+
 %text-bold-heading {
+   font-family: $font-sans;
+   color: $color-white;
+   font-size: 22px;
+ }
+
+%text-heavy {
   font-family: $font-sans;
   color: $color-white;
-  font-size: 22px;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 %text-section-title {
@@ -42,6 +73,30 @@ $header-height-inverse: calc(100vh - #{$header-height});
   @extend %text-secondary;
   font-size: 13px;
   font-style: normal;
+}
+
+%button-simple {
+  @extend %text-primary;
+  padding: 14px 22px;
+  border: 1px solid $transparent;
+  border-radius: 4px;
+  @include pretty-button($transparent, $color-bg-alt, $color-white)
+}
+
+%button-action {
+  @extend %button-simple;
+  color: $color-yellow;
+  border: 1px solid $color-yellow;
+  @include pretty-button($transparent, $color-yellow, $color-bg-alt)
+}
+
+%button-jumbo {
+  @extend %text-heavy;
+  padding: 22px 40px;
+  border: 0;
+  border-radius: 6px;
+  color: $color-bg-alt;
+  @include pretty-button($color-yellow, $color-white, $color-bg)
 }
 
 :export {

@@ -8,7 +8,7 @@ import svgCrescent from '../svg/crescent.svg'
 import svgLogo from '../svg/logo.svg'
 import util from './util'
 
-const subheadDom = document.getElementsByClassName('subhead')[0]
+const subheadDom = document.getElementById('subhead')
 const subheadInitialFontSize = parseInt(window.getComputedStyle(subheadDom)['fontSize'])
 const landingDom = document.getElementById('svg-canvas')
 const canvas = SVG(landingDom)

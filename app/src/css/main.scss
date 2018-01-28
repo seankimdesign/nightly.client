@@ -4,6 +4,32 @@ body{
   margin: 0;
 }
 
+button{
+  cursor: pointer;
+
+  &.simple{
+    @extend %button-simple
+  }
+
+  &.action{
+    @extend %button-action
+  }
+
+  &.jumbo{
+    @extend %button-jumbo
+  }
+}
+
+p{
+  &.bold-heading{
+    @extend %text-bold-heading;
+  }
+
+  &.secondary{
+    @extend %text-secondary
+  }
+}
+
 .header{
   position: fixed;
   top: 0;
@@ -11,26 +37,57 @@ body{
   height: $header-height;
   background-color: $color-bg;
   border-bottom: 1px solid $color-gray;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
   z-index: 2000;
+
+  >.nightly-link{
+    @extend %text-bold-heading;
+    @include pretty-link($color-yellow);
+    margin: 0 auto 0 $side-margin;
+  }
+  >button{
+    margin: 0 15px;
+
+    &:last-of-type{
+      margin-right: $side-margin;
+    }
+  }
 }
 
 section{
-
   height: $header-height-inverse;
 
   &.landing{
     margin-top: $header-height;
     background-color: $color-bg;
 
-    >.svg-canvas{
-      height: 100%;
-    }
-
-    .subhead{
-      @extend %text-bold-heading;
+    >.subhead{
       position: absolute;
       white-space: nowrap;
+      color: $color-white-alt;
       visibility: hidden;
+    }
+
+    >.call-to-action{
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      right: $side-margin-inward;
+      width: calc(20% + 60px);
+      min-width: 240px;
+      bottom: 60px;
+
+      >button{
+        width: 100%;
+      }
+    }
+
+    >.svg-canvas{
+      height: 100%;
     }
   }
 
