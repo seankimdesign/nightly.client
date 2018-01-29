@@ -1,14 +1,14 @@
 const path = require('path')
-
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
+const buildPath = path.resolve(__dirname, 'landing')
 const extractSass = new ExtractTextPlugin({
   filename: 'css/bundle.css'
 })
 
 module.exports = {
   entry: {
-    main: ['./app/src/js/main.js', './app/src/css/main.scss']
+    main: [buildPath + '/src/js/main.js', buildPath + '/src/css/main.scss']
   },
   module: {
     rules: [
@@ -37,7 +37,7 @@ module.exports = {
     extractSass
   ],
   output: {
-    path: path.resolve(__dirname, 'app/dist'),
+    path: buildPath + '/dist',
     filename: 'js/bundle.js'
   }
 }

@@ -14,7 +14,7 @@ $header-height: 75px;
 $header-height-inverse: calc(100vh - #{$header-height});
 
 $side-margin: calc(6% + 15px);
-$side-margin-inward: calc(14% - 35px);
+$side-margin-inward: calc(14% - 55px);
 
 @mixin pretty-link($hover-color){
   text-decoration: none;
