@@ -1,7 +1,7 @@
-import _ from 'lodash'
+import _ from 'lodash/functions'
 import SVG from 'svg.js'
 
-import styles from '../css/_config.scss'
+import styles from 'Shared/css/_config.scss'
 import CONF from './config'
 
 import svgCrescent from '../svg/crescent.svg'

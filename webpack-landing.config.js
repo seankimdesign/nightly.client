@@ -21,7 +21,9 @@ module.exports = {
         test: /\.scss$/,
         use: extractSass.extract({
           use: [
-            {loader: 'css-loader'},
+            {
+              loader: 'css-loader'
+            },
             {loader: 'sass-loader'}
           ],
           fallback: 'style-loader'
@@ -39,5 +41,10 @@ module.exports = {
   output: {
     path: buildPath + '/dist',
     filename: 'js/bundle.js'
+  },
+  resolve: {
+    alias: {
+      Shared: path.resolve(__dirname, 'shared')
+    }
   }
 }

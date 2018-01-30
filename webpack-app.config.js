@@ -31,5 +31,10 @@ module.exports = {
     path: buildPath + '/dist/js/',
     filename: 'bundle.js',
     publicPath: '/dist/js/'
+  },
+  resolve: {
+    alias: {
+      Shared: path.resolve(__dirname, 'shared')
+    }
   }
 }
