@@ -12,6 +12,7 @@ $font-slab: 'Slabo 27px', serif;
 
 $header-height: 75px;
 $header-height-inverse: calc(100vh - #{$header-height});
+$header-logo-height: 30px;
 
 $side-margin: calc(6% + 15px);
 $side-margin-inward: calc(14% - 55px);
@@ -22,6 +23,15 @@ $side-margin-inward: calc(14% - 55px);
 
   &:hover{
     color: $hover-color;
+  }
+}
+
+@mixin pretty-link-fill($hover-color){
+  text-decoration: none;
+  transition: fill 0.2s ease-in;
+
+  &:hover{
+    fill: $hover-color;
   }
 }
 
@@ -100,11 +110,13 @@ $side-margin-inward: calc(14% - 55px);
 }
 
 :export {
-  colorBg: #161e1e;
-  colorWhite: #fafcfc;
-  colorYellow: #f6e14b;
-  colorBgAlt: #242826;
-  colorWhiteAlt: #b4b4b4;
-  colorYellowAlt: #e3b11d;
-  colorGray: #545856;
+  colorBg: $color-bg;
+  colorWhite: $color-white;
+  colorYellow: $color-yellow;
+  colorBgAlt: $color-bg-alt;
+  colorWhiteAlt: $color-white-alt;
+  colorYellowAlt: $color-yellow-alt;
+  colorGray: $color-gray;
+  headerHeight: $header-height;
+  headerLogoHeight: $header-logo-height;
 }

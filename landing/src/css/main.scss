@@ -45,9 +45,13 @@ p{
 
   >.nightly-link{
     @extend %text-bold-heading;
-    @include pretty-link($color-yellow);
     margin: 0 auto 0 $side-margin;
+    height: $header-logo-height;
+    width: $header-logo-height * 4;
+    fill: $color-white;
+    @include pretty-link-fill($color-yellow);
   }
+
   >button{
     margin: 0 15px;
 

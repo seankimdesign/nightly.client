@@ -6,14 +6,24 @@ import CONF from './config'
 
 import svgCrescent from '../svg/crescent.svg'
 import svgLogo from '../svg/logo.svg'
+import svgLogoBold from '../svg/logo-bold.svg'
 import util from './util'
 
+const logoLinkDom = document.getElementById('nightly-link')
 const subheadDom = document.getElementById('subhead')
 const subheadInitialFontSize = parseInt(window.getComputedStyle(subheadDom)['fontSize'])
 const landingDom = document.getElementById('svg-canvas')
 const canvas = SVG(landingDom)
 let initialRender = true
 let renderedElems = []
+
+const injectLogo = () => {
+  logoLinkDom.innerHTML = ''
+  const logoLinkCanvas = SVG(logoLinkDom)
+  const logoRef = SVG.adopt(svgLogoBold.node).clone()
+  const headerLogoHeight = parseInt(styles.headerLogoHeight)
+  logoLinkCanvas.use(logoRef).size(headerLogoHeight * 4, headerLogoHeight)
+}
 
 const prepDraw = () => {
   const canvasHeight = landingDom.clientHeight
@@ -223,5 +233,6 @@ function getMouseMoveEvent (rows, height, symbolConf, renderedSymbols) {
   }, CONF.bgRender.mouseMovementThrottleTimer)
 }
 
+injectLogo()
 prepDraw()
 window.addEventListener('resize', _.debounce(prepDraw, CONF.bgRender.resizeRenderDebounceTimer), false)
