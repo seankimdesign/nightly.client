@@ -113,6 +113,7 @@ $full-margin: calc(88% - 30px);
   @include pretty-button($color-yellow, $color-white, $color-bg)
 }
 
+//noinspection CssInvalidPseudoSelector
 :export {
   colorBg: $color-bg;
   colorWhite: $color-white;
@@ -123,4 +124,5 @@ $full-margin: calc(88% - 30px);
   colorGray: $color-gray;
   headerHeight: $header-height;
   headerLogoHeight: $header-logo-height;
+  footerHeight: $footer-height;
 }

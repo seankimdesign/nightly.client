@@ -1,13 +1,15 @@
 import _ from 'lodash/function'
 import SVG from 'svg.js'
 
-import styles from 'Shared/css/_config.scss'
+import rawStyles from 'Shared/css/_config.scss'
 import CONF from './config'
 
 import svgCrescent from '../svg/crescent.svg'
 import svgLogo from '../svg/logo.svg'
 import svgLogoBold from '../svg/logo-bold.svg'
-import util from './util'
+import util from 'Shared/js/util'
+
+const styles = util.convertStyles(rawStyles)
 
 const logoLinkDom = document.getElementById('nightly-link')
 const subheadDom = document.getElementById('subhead')
@@ -21,7 +23,7 @@ const injectLogo = () => {
   logoLinkDom.innerHTML = ''
   const logoLinkCanvas = SVG(logoLinkDom)
   const logoRef = SVG.adopt(svgLogoBold.node).clone()
-  const headerLogoHeight = parseInt(styles.headerLogoHeight)
+  const headerLogoHeight = styles.headerLogoHeight.value
   logoLinkCanvas.use(logoRef).size(headerLogoHeight * 4, headerLogoHeight)
 }
 
