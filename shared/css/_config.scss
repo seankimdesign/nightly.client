@@ -14,8 +14,11 @@ $header-height: 75px;
 $header-height-inverse: calc(100vh - #{$header-height});
 $header-logo-height: 30px;
 
+$footer-height: 110px;
+
 $side-margin: calc(6% + 15px);
 $side-margin-inward: calc(14% - 55px);
+$full-margin: calc(88% - 30px);
 
 @mixin pretty-link($hover-color){
   text-decoration: none;
@@ -45,15 +48,16 @@ $side-margin-inward: calc(14% - 55px);
   }
 }
 
-%text-bold-heading {
-   font-family: $font-sans;
-   color: $color-white;
-   font-size: 22px;
+%text-fine-heading {
+  font-family: $font-sans;
+  color: $color-white-alt;
+  font-size: 22px;
+  font-weight: 400;
  }
 
 %text-heavy {
   font-family: $font-sans;
-  color: $color-white;
+  color: $color-white-alt;
   font-size: 20px;
   font-weight: 700;
   text-transform: uppercase;

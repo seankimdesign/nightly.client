@@ -2,35 +2,54 @@
 
 body{
   margin: 0;
+  background-color: $color-bg;
 }
 
 button{
   cursor: pointer;
 
   &.simple{
-    @extend %button-simple
+    @extend %button-simple;
   }
 
   &.action{
-    @extend %button-action
+    @extend %button-action;
   }
 
   &.jumbo{
-    @extend %button-jumbo
+    @extend %button-jumbo;
   }
 }
 
 p{
-  &.bold-heading{
-    @extend %text-bold-heading;
-  }
+  @extend %text-primary;
 
   &.secondary{
-    @extend %text-secondary
+    @extend %text-secondary;
+  }
+
+  &.fine-print{
+    @extend %text-fine-print;
   }
 }
 
-.header{
+a{
+  color: $color-yellow;
+  @include pretty-link($color-white);
+
+  &.inverse{
+    color: $color-white;
+    @include pretty-link($color-yellow);
+  }
+}
+
+h1, h2, h3, h4, h5, h6, p{
+  &.fine-heading{
+    @extend %text-fine-heading;
+  }
+}
+
+header{
   position: fixed;
   top: 0;
   width: 100%;
@@ -44,7 +63,7 @@ p{
   z-index: 2000;
 
   >.nightly-link{
-    @extend %text-bold-heading;
+    @extend %text-fine-heading;
     margin: 0 auto 0 $side-margin;
     height: $header-logo-height;
     width: $header-logo-height * 4;
@@ -71,7 +90,6 @@ section{
     >.subhead{
       position: absolute;
       white-space: nowrap;
-      color: $color-white-alt;
       visibility: hidden;
     }
 
@@ -97,7 +115,46 @@ section{
 
   &.features{
     background-color: $color-bg-alt;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    >.section-head {
+      @extend %text-section-title;
+      margin: 120px 0 20px 0;
+    }
+
+    >.features-list{
+      display: flex;
+      width: $full-margin;
+      margin-top: 80px;
+      justify-content: space-evenly;
+
+      >.single-feature{
+        padding: 40px;
+        border-radius: 4px;
+        background-color: $color-bg;
+        min-width: calc(15% + 25px);
+        text-align: center;
+
+        >.feature-title{
+          margin: 0 0 25px;
+        }
+      }
+    }
   }
 }
 
+footer{
+  height: $footer-height;
+  background-color: $color-bg;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 
+  .copyright{
+    opacity: 0.7;
+    line-height: 1.8em;
+  }
+}

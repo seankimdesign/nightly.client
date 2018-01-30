@@ -1,4 +1,4 @@
-import _ from 'lodash/functions'
+import _ from 'lodash/function'
 import SVG from 'svg.js'
 
 import styles from 'Shared/css/_config.scss'
