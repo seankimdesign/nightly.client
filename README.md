@@ -1,5 +1,6 @@
-# Nightly.LandingPage
+# Nightly.Client
 
-Landing page portion for Nightly web application.
+Nightly web application client comprised of two distinct projects with some code sharing.
 
-Light-weight marketing page that shares minimal code with the react-based client application. 
++ Application landing page
++ React-based web application frontend
