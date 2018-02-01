@@ -19,7 +19,6 @@ module.exports = {
   },
   devServer: {
     contentBase: buildPath,
-    openPage: 'src/index.html',
     publicPath: '/dist/js/',
     watchContentBase: true,
     watchOptions: {
@@ -34,7 +33,9 @@ module.exports = {
   },
   resolve: {
     alias: {
-      Shared: path.resolve(__dirname, 'shared')
+      Shared: path.resolve(__dirname, 'shared'),
+      Root: path.resolve(__dirname, 'app/src')
     }
-  }
+  },
+  devtool: 'source-map'
 }

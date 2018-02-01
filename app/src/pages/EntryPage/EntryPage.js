@@ -8,7 +8,7 @@ class EntryPage extends Component {
     const loading = this.props.person.fetching && <p>loading....</p>
     return (
       <div>
-        <h2>Whoa? Entry Page</h2>
+        <h2>Entry Page</h2>
         <button onClick={this.props.doFetchPerson}>Click to load a person</button>
         <p>{personName}</p>
         {personPicture}

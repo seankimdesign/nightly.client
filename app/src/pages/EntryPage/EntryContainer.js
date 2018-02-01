@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
-import { fetchPerson } from '../actions/person'
-import EntryPage from '../pages/EntryPage'
+import { fetchPerson } from 'Root/actions/person'
+import EntryPage from './EntryPage'
 
 const mapState = (state) => ({
   person: state.person
@@ -13,9 +13,9 @@ const mapDispatch = (dispatch) => ({
   }
 })
 
-const EntryView = connect(
-    mapState,
-    mapDispatch
+const EntryContainer = connect(
+  mapState,
+  mapDispatch
 )(EntryPage)
 
-export default EntryView
+export default EntryContainer
