@@ -1,9 +1,13 @@
 import React from 'react'
+import glamorous from 'glamorous'
 import { BrowserRouter as Router } from 'react-router-dom'
 
-import PrimarySplitViewWrapper from './PrimarySplitStyle'
+import primarySplitStyle from './PrimarySplitStyle'
 import PrimarySplitRoutes from './PrimarySplitRoutes'
-import TopNavigation from '../../components/TopNavigation'
+import Header from 'Root/components/Header'
+import TopNavigation from 'Root/components/TopNavigation'
+
+const PrimarySplitViewWrapper = glamorous.div(primarySplitStyle)
 
 export default () => {
   const links = [
@@ -23,7 +27,9 @@ export default () => {
   return (
     <Router>
       <PrimarySplitViewWrapper>
-        <TopNavigation links={links} />
+        <Header>
+          <TopNavigation links={links} />
+        </Header>
         <PrimarySplitRoutes />
       </PrimarySplitViewWrapper>
     </Router>

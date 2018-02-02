@@ -2,12 +2,12 @@ import _ from 'lodash/function'
 import SVG from 'svg.js'
 
 import rawStyles from 'Shared/css/_config.scss'
-import CONF from './config'
-
-import svgCrescent from '../svg/crescent.svg'
-import svgLogo from '../svg/logo.svg'
-import svgLogoBold from '../svg/logo-bold.svg'
 import util from 'Shared/js/util'
+import svgCrescent from 'Shared/svg/crescent.svg'
+import svgLogo from 'Shared/svg/logo.svg'
+import svgLogoBold from 'Shared/svg/logo-bold.svg'
+
+import CONF from './config'
 
 const styles = util.convertStyles(rawStyles)
 

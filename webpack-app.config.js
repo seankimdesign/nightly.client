@@ -1,6 +1,10 @@
 const path = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const buildPath = path.resolve(__dirname, 'app')
+const extractSass = new ExtractTextPlugin({
+  filename: 'css/bundle.css'
+})
 
 module.exports = {
   entry: ['babel-polyfill', buildPath + '/src/index.js'],
@@ -12,11 +16,26 @@ module.exports = {
         loader: 'babel-loader'
       },
       {
+        test: /\.scss$/,
+        use: extractSass.extract({
+          use: [
+            {
+              loader: 'css-loader'
+            },
+            {loader: 'sass-loader'}
+          ],
+          fallback: 'style-loader'
+        })
+      },
+      {
         test: /\.svg$/,
         loader: 'svg-sprite-loader'
       }
     ]
   },
+  plugins: [
+    extractSass
+  ],
   devServer: {
     contentBase: buildPath,
     publicPath: '/dist/js/',

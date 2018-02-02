@@ -1,9 +1,9 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
-import EntryPage from 'Root/pages/EntryPage/'
-import NewPostPage from 'Root/pages/NewPostPage/'
-import LoginPage from 'Root/pages/LoginPage/'
+import EntryPage from 'Root/pages/EntryPage'
+import NewPostPage from 'Root/pages/NewPostPage'
+import LoginPage from 'Root/pages/LoginPage'
 
 export default () => (
   <Switch>

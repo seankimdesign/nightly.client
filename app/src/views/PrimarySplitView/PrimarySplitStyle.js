@@ -1,7 +1,7 @@
-import React from 'react'
-import glamorous from 'glamorous'
+import styles from 'Root/styles'
 
-export default glamorous.div({
-  display: 'flex',
-  flexDirection: 'column'
-})
+export default {
+  primarySplitWrapper: {
+    ...styles.premade.flexColumnCenter
+  }
+}

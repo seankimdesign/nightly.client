@@ -1,5 +1,3 @@
-import 'whatwg-fetch'
-
 export function fetchPerson () {
   return fetch('https://randomuser.me/api/?nat=gb,us')
     .then(response => response.json())
