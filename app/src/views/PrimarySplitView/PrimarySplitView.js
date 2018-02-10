@@ -7,7 +7,7 @@ import PrimarySplitRoutes from './PrimarySplitRoutes'
 import Header from 'Root/components/Header'
 import TopNavigation from 'Root/components/TopNavigation'
 
-const PrimarySplitViewWrapper = glamorous.div(primarySplitStyle)
+const PrimarySplitViewWrapper = glamorous.div(primarySplitStyle.primarySplitWrapper)
 
 export default () => {
   const links = [

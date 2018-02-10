@@ -8,10 +8,14 @@ export default {
     color: styles.colorWhite,
     fontFamily: styles.fontSans
   },
-  headerLogo: {
+  headerLogoContainer: {
     height: styles.headerLogoHeight,
-    fill: styles.colorWhite,
     marginLeft: styles.sideMargin,
     marginRight: 'auto'
+  },
+  headerLogo: {
+    height: styles.headerLogoHeight,
+    width: styles.headerLogoHeight * 4,
+    fill: styles.colorWhite
   }
 }
