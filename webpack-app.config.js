@@ -40,8 +40,10 @@ module.exports = {
     contentBase: buildPath,
     publicPath: '/dist/js/',
     watchContentBase: true,
+    host: 'localhost',
+    historyApiFallback: true,
     watchOptions: {
-      poll: true
+      poll: 15000
     },
     port: 7777
   },

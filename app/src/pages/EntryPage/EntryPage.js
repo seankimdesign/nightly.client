@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import Page from 'Root/components/Page'
+
 class EntryPage extends Component {
   render () {
     const personInfo = {...this.props.person}
@@ -7,13 +9,13 @@ class EntryPage extends Component {
     const personPicture = personInfo.picture ? <img src={personInfo.picture} alt={personName} /> : <p>no image</p>
     const loading = this.props.person.fetching && <p>loading....</p>
     return (
-      <div>
+      <Page>
         <h2>Entry Page</h2>
         <button onClick={this.props.doFetchPerson}>Click to load a person</button>
         <p>{personName}</p>
         {personPicture}
         {loading}
-      </div>
+      </Page>
     )
   }
 }
