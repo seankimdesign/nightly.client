@@ -4,16 +4,11 @@ import Page from 'Root/components/Page'
 
 class EntryPage extends Component {
   render () {
-    const personInfo = {...this.props.person}
-    const personName = personInfo.name || 'Unknown Name'
-    const personPicture = personInfo.picture ? <img src={personInfo.picture} alt={personName} /> : <p>no image</p>
-    const loading = this.props.person.fetching && <p>loading....</p>
+    const loading = this.props.account.fetching && <p>loading....</p>
     return (
-      <Page>
+      <Page column>
         <h2>Entry Page</h2>
-        <button onClick={this.props.doFetchPerson}>Click to load a person</button>
-        <p>{personName}</p>
-        {personPicture}
+        <button onClick={this.props.fetchAccount}>Fetch Account</button>
         {loading}
       </Page>
     )

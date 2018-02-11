@@ -43,7 +43,7 @@ module.exports = {
     host: 'localhost',
     historyApiFallback: true,
     watchOptions: {
-      poll: 15000
+      poll: 10000
     },
     port: 7777
   },

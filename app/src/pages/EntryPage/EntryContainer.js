@@ -1,17 +1,15 @@
 import { connect } from 'react-redux'
 
-import { fetchPerson } from 'Root/actions/person'
+import { fetchAccount } from 'Root/actions/account'
 import EntryPage from './EntryPage'
 
 const mapState = (state) => ({
-  person: state.person
+  account: state.account
 })
 
-const mapDispatch = (dispatch) => ({
-  doFetchPerson: () => {
-    dispatch(fetchPerson())
-  }
-})
+const mapDispatch = {
+  fetchAccount
+}
 
 const EntryContainer = connect(
   mapState,

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 
-import person from './person'
+import account from './account'
 
 const reducers = combineReducers({
-  person
+  account
 })
 
 export default reducers

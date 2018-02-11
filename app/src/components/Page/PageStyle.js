@@ -2,10 +2,17 @@ import styles from 'Root/styles'
 
 export default {
   pageWrapper: {
-    display: 'flex',
-    backgroundColor: styles.colorBgAlt,
-    color: styles.colorWhite,
     fontFamily: styles.fontSans,
-    padding: '20px'
+    backgroundColor: styles.colorBgAlt,
+    height: `calc(100vh - ${styles.headerHeight}px)`
+  },
+  pageInnerRow: {
+    padding: '20px',
+    display: 'flex'
+  },
+  pageInnerColumn: {
+    padding: '20px',
+    display: 'flex',
+    flexDirection: 'column'
   }
 }
