@@ -7,10 +7,11 @@ const testBody = {
 }
 
 export function fetchAccount () {
-  return fetch('http://localhost:5000/login/suejchoe', {
+  return fetch('http://nightly.seankimdesign.com:5000/login/suejchoe', {
     method: 'POST',
     headers: contentTypeJson,
-    body: JSON.stringify(testBody)
+    body: JSON.stringify(testBody),
+    credentials: 'include'
   })
     .then(response => response.json())
 }
