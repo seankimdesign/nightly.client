@@ -1,19 +1,19 @@
 import React from 'react'
 import glamorous from 'glamorous'
 
-import BlockLink from 'Root/components/BlockLink'
-import topNavigationStyle from './TopNavigationStyle'
+import style from './TopNavigationStyle'
+import Link from './TopNavigation.Link'
 
-const TopNavigationWrapper = glamorous.nav(topNavigationStyle.topNavigationWrapper)
+const TopNavigationWrapper = glamorous.nav(style.topNavigationWrapper)
 
-export default (props) => {
-  const links = props.links.map(link =>
-    <BlockLink key={link.url} {...link} />
-  )
+const TopNavigation = (props) => {
   return (
     <TopNavigationWrapper>
-      <div>This is a top nav</div>
-      {links}
+      {props.children}
     </TopNavigationWrapper>
   )
 }
+
+TopNavigation.Link = Link
+
+export default TopNavigation

@@ -1,16 +1,16 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'Root/components/Link'
 import glamorous from 'glamorous'
 
-const BlockLinkWrapper = glamorous.div({
-  fontSize: '16px',
-  padding: '6px 8px',
-  borderRadius: '3px',
-  border: '1px solid #999'
-})
+import style from './BlockLinkStyle'
 
-export default (prop) => (
-  <BlockLinkWrapper>
-    <Link to={prop.url}>{prop.text}</Link>
-  </BlockLinkWrapper>
-)
+export default (props) => {
+  const {url, children, ...wrapperProps} = props
+  const stylize = props.stylize || {}
+  const BlockLinkWrapper = glamorous.div(style.blockLinkWrapper, style.blockLinkProps, stylize)
+  return (
+    <BlockLinkWrapper {...wrapperProps}>
+      <Link to={props.url}>{props.children}</Link>
+    </BlockLinkWrapper>
+  )
+}

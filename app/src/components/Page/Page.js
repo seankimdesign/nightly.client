@@ -1,14 +1,14 @@
 import React from 'react'
 import glamorous from 'glamorous'
 
-import pageStyle from './PageStyle'
+import style from './PageStyle'
 
-const PageWrapper = glamorous.section(pageStyle.pageWrapper)
+const PageWrapper = glamorous.section(style.pageWrapper)
 
 export default (props) => {
   const PageInner = props.column
-    ? glamorous.div(pageStyle.pageInnerColumn)
-    : glamorous.div(pageStyle.pageInnerRow)
+    ? glamorous.div(style.pageInnerColumn)
+    : glamorous.div(style.pageInnerRow)
   return (
     <PageWrapper>
       <PageInner>

@@ -10,25 +10,21 @@ import TopNavigation from 'Root/components/TopNavigation'
 const PrimarySplitViewWrapper = glamorous.div(primarySplitStyle.primarySplitWrapper)
 
 export default () => {
-  const links = [
-    {
-      text: 'Main',
-      url: '/'
-    },
-    {
-      text: 'Write',
-      url: '/write'
-    },
-    {
-      text: 'Login',
-      url: '/login'
-    }
-  ]
   return (
     <Router>
       <PrimarySplitViewWrapper>
         <Header>
-          <TopNavigation links={links} />
+          <TopNavigation>
+            <TopNavigation.Link url='/'>
+              Main
+            </TopNavigation.Link>
+            <TopNavigation.Link url='/write'>
+              Write
+            </TopNavigation.Link>
+            <TopNavigation.Link url='/login'>
+              Login
+            </TopNavigation.Link>
+          </TopNavigation>
         </Header>
         <PrimarySplitRoutes />
       </PrimarySplitViewWrapper>

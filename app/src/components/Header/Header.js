@@ -2,22 +2,23 @@ import React from 'react'
 import glamorous from 'glamorous'
 import { Link } from 'react-router-dom'
 
-import headerStyle from './HeaderStyle'
+import style from './HeaderStyle'
 import svgLogoBold from 'Shared/svg/logo-bold.svg'
 import SVGImage from 'Root/components/SVGImage'
 
-const HeaderWrapper = glamorous.header(headerStyle.headerWrapper)
-const HeaderLogo = glamorous.div(headerStyle.headerLogoContainer)
+const HeaderWrapper = glamorous.header(style.headerWrapper)
+const HeaderLogoWrapper = glamorous.div(style.headerLogoWrapper)
+const HeaderContentWrapper = glamorous.div(style.headerContentWrapper)
 
 export default (prop) => (
   <HeaderWrapper>
-    <HeaderLogo>
+    <HeaderLogoWrapper>
       <Link to='/'>
-        <SVGImage id={svgLogoBold.id} {...headerStyle.headerLogo} />
+        <SVGImage id={svgLogoBold.id} {...style.headerLogoAttributes} />
       </Link>
-    </HeaderLogo>
-    <div>
+    </HeaderLogoWrapper>
+    <HeaderContentWrapper>
       {prop.children}
-    </div>
+    </HeaderContentWrapper>
   </HeaderWrapper>
 )
