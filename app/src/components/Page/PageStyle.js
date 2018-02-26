@@ -3,8 +3,8 @@ import styles from 'Root/styles'
 export default {
   pageWrapper: {
     fontFamily: styles.fontSans,
-    backgroundColor: styles.colorBgAlt,
-    height: `calc(100vh - ${styles.headerHeight}px)`
+    height: `calc(100vh - ${styles.headerHeight}px)`,
+    margin: '0 ' + styles.sideMargin
   },
   pageInnerRow: {
     padding: '20px',

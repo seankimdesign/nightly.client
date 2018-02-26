@@ -1,3 +1,3 @@
-import LoginPage from './LoginPage'
+import LoginContainer from './LoginContainer'
 
-export default LoginPage
+export default LoginContainer

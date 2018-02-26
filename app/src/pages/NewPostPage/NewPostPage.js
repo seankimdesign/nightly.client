@@ -1,3 +1,16 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-export default () => <div>I am New Post Page</div>
+import Heading from 'Root/components/Heading'
+import Page from 'Root/components/Page'
+
+class NewPostPage extends Component {
+  render () {
+    return (
+      <Page column>
+        <Heading>Write Page</Heading>
+      </Page>
+    )
+  }
+}
+
+export default NewPostPage

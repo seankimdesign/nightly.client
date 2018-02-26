@@ -5,6 +5,9 @@ function locateExclusiveUnit (givenValue) {
   const matchedUnit = units.findIndex(unit => value.indexOf(unit) > -1)
   if (matchedUnit === -1) return falseResult
 
+  const isExtractable = value.split(' ').length === 1
+  if (!isExtractable) return falseResult
+
   const otherUnits = [...units.slice(0, matchedUnit), ...units.slice(matchedUnit + 1)]
   const isExclusiveMatch = otherUnits.every(unit => value.indexOf(unit) === -1)
   if (!isExclusiveMatch) return falseResult

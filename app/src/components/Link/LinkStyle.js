@@ -11,6 +11,7 @@ export default {
     display: props.block ? 'block' : 'inline-block',
     textDecoration: props.underline ? 'underline' : 'none',
     fontWeight: props.bold ? 700 : 400,
-    textAlign: props.align || 'left'
+    textAlign: props.align || 'left',
+    padding: props.padding || styles.fn.getSpacing(2)
   })
 }

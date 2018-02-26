@@ -1,10 +1,10 @@
 import React from 'react'
 
-import BlockLink from 'Root/components/BlockLink'
+import Button from 'Root/components/Button'
 import style from './TopNavigationStyle'
 
 export default (props) => {
   return (
-    <BlockLink noBorder {...props} {...style.topNavigationLinkAttributes} />
+    <Button asLink noBorder {...props} {...style.topNavigationLinkAttributes} />
   )
 }
